@@ -2,17 +2,8 @@
 
 ## A propos
 
-Un starter de projet Laravel.
+Projet d'apprentissage du Framework Laravel.
 
-+ Environnement de dev basé sur Docker
-+ Tailwindcss
-+ Vue.js
+## Structure de la base de donnée
 
-## Lancer l'application
-
-```bash
-cp .env.example .env
-docker-compose up --build -d
-docker-compose exec app composer up
-docker-compose exec app yarn install 
-```
+Le diagramme de la base de donnée est dispo ici => https://dbdiagram.io/d/61e55bfe50665b3304392d47
