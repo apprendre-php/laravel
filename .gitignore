@@ -16,3 +16,4 @@ yarn-error.log
 /public/mix-manifest.json
 /yarn.lock
 composer.lock
+/package-lock.json
