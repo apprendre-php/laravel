@@ -17,7 +17,7 @@ class UpdateUsersTable extends Migration
             $table->integer('level');
             $table->integer('power');
             $table->integer('health');
-            $table->foreignId('class_id')->constrained();
+            $table->foreignId('role_id')->constrained();
         });
     }
 
@@ -32,7 +32,7 @@ class UpdateUsersTable extends Migration
             $table->dropColumn('level');
             $table->dropColumn('power');
             $table->dropColumn('health');
-            $table->dropConstrainedForeignId('class_id');
+            $table->dropConstrainedForeignId('role_id');
         });
     }
 }
