@@ -172,3 +172,41 @@ Route::delete('/users/drop', function (Request $request) {
 
     echo "<a href='/users/choose'>Retour au formulaire de suppression d'un joueur</a>";
 });
+
+// #4 Query Builder : Exercice 3
+
+Route::get('/users/{user}/edit', function ($user) {
+    $user = DB::table('users')->find($user);
+
+    echo "<h1>Edition d'un joueur</h1>";
+
+    $action = '/users/' . $user->id;
+
+    echo '<form action="' . $action  . '" method="post">';
+    echo method_field('patch');
+    echo csrf_field();
+    echo '<label>Nom</label><br/>';
+    echo '<input type="text" name="name" value="' . $user->name .  '"/><br/><br/>';
+
+    echo '<label>Niveau</label><br/>';
+    echo '<input type="text" name="level" value="' . $user->level .  '"/><br/><br/>';
+
+    echo '<label>Santé</label><br/>';
+    echo '<input type="text" name="health" value="' . $user->health .  '"/><br/><br/>';
+
+    echo '<label>Puissance</label><br/>';
+    echo '<input type="text" name="power" value="' . $user->power .  '"/><br/><br/>';
+
+    echo '<button type="submit">Envoyer</button>';
+    echo '</form>';
+});
+
+Route::patch('/users/{user}', function ($user, Request $request) {
+    DB::table('users')
+        ->where('id', $user)
+        ->update(
+            $request->all('name', 'level', 'health', 'power')
+        );
+
+    return redirect()->back();
+});
