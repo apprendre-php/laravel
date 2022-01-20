@@ -205,3 +205,59 @@ Route::patch('/users/{user}', function ($user, Request $request) {
 
     return redirect()->back();
 });
+
+// #5 Models : Exercice 4
+
+Route::get('/register', function () {
+    $roles = \App\Models\Role::all();
+
+    echo "<h1>Inscription d'un joueur</h1>";
+
+    echo '<form action="/users" method="post">';
+    echo csrf_field();
+    echo '<label>Nom</label><br/>';
+    echo '<input type="text" name="name"/><br/><br/>';
+
+    echo '<label>Email</label><br/>';
+    echo '<input type="text" name="email"/><br/><br/>';
+
+    echo '<label>Mot de passe</label><br/>';
+    echo '<input type="password" name="password"/><br/><br/>';
+
+    echo '<label>Role</label><br/>';
+    echo '<select name="role_id">';
+    foreach ($roles as $role) {
+        echo "<option value='" . $role->id . "'>" . $role->name . "</option>";
+    }
+    echo '</select><br/><br/>';
+
+    echo '<label>Niveau</label><br/>';
+    echo '<input type="text" name="level"/><br/><br/>';
+
+    echo '<label>Santé</label><br/>';
+    echo '<input type="text" name="health"/><br/><br/>';
+
+    echo '<label>Puissance</label><br/>';
+    echo '<input type="text" name="power"/><br/><br/>';
+
+    echo "<button type='submit'>S'inscrire</button>";
+    echo '</form>';
+});
+
+Route::post('/users', function (Request $request) {
+    $properties = $request->all([
+        'name', 'email', 'power', 'level', 'health',
+    ]);
+
+    $properties['password'] = \Illuminate\Support\Facades\Hash::make($request->input('password'));
+
+    $user = new \App\Models\User(
+        $properties
+    );
+
+    $role = \App\Models\Role::find($request->input('role_id'));
+
+    $role->users()->save($user);
+
+    echo "L'utilisateur " . $user->name . " est inscrit avec le rôle " . $role->name . "\n";
+});
