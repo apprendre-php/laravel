@@ -261,3 +261,42 @@ Route::post('/users', function (Request $request) {
 
     echo "L'utilisateur " . $user->name . " est inscrit avec le rôle " . $role->name . "\n";
 });
+
+// #5 Models : Exercice 5
+
+Route::get('/recruit-player', function () {
+    $users = \App\Models\User::all();
+    $guilds = \App\Models\Guild::all();
+
+    echo "<h1>Recrutement d'un joueur</h1>";
+
+    echo '<form action="/recruit-player/sign" method="post">';
+    echo csrf_field();
+    echo '<label>Joueur</label><br/>';
+    echo '<select name="user_id">';
+    foreach ($users as $user) {
+        echo "<option value='" . $user->id . "'>" . $user->name . "</option>";
+    }
+    echo '</select><br/><br/>';
+
+    echo '<label>Guilde</label><br/>';
+    echo '<select name="guild_id">';
+    foreach ($guilds as $guild) {
+        echo "<option value='" . $guild->id . "'>" . $guild->name . "</option>";
+    }
+    echo '</select><br/><br/>';
+
+    echo '<button type="submit">Envoyer</button>';
+    echo '</form>';
+});
+
+Route::post('/recruit-player/sign', function (Request $request) {
+    $user = \App\Models\User::find($request->input('user_id'));
+    $guild = \App\Models\Guild::find($request->input('guild_id'));
+
+    $user->guilds()->attach($guild);
+
+    echo "Le joueur " . $user->name . " a rejoint la guilde " . $guild->name . "<br/>";
+
+    echo "<a href='/recruit-player'>Retour au formulaire de recrutement</a>";
+});
