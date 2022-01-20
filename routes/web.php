@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // #4 Query Builder : Exercice 1
 
 Route::get('/guilds', function () {
-    $guilds = DB::table('guilds')->get();
+    $guilds = \App\Models\Guild::get();
 
     echo '<ul>';
     foreach ($guilds as $guild) {
@@ -28,8 +28,7 @@ Route::get('/guilds', function () {
 });
 
 Route::get('/users-with-health-up-20', function () {
-    $users = DB::table('users')
-        ->where('health', '>', 20)
+    $users = \App\Models\User::where('health', '>', 20)
         ->get();
 
     echo '<ul>';
@@ -40,8 +39,7 @@ Route::get('/users-with-health-up-20', function () {
 });
 
 Route::get('/best-user', function () {
-    $user = DB::table('users')
-        ->orderByDesc('level')
+    $user = \App\Models\User::orderByDesc('level')
         ->limit(1)
         ->first();
 
@@ -49,14 +47,11 @@ Route::get('/best-user', function () {
 });
 
 Route::get('/users/{user}/items', function ($user) {
-    $userItems = DB::table('items')
-        ->leftJoin('item_user', 'item_user.item_id', '=', 'items.id')
-        ->where('item_user.user_id', $user)
-        ->get();
+    $userItems = \App\Models\User::find($user)->items;
 
     echo '<ul>';
     foreach ($userItems as $item) {
-        echo "<li>" . $item->name . " / qté: " . $item->quantity . "</li>";
+        echo "<li>" . $item->name . " / qté: " . $item->pivot->quantity . "</li>";
     }
     echo '</ul>';
 });
