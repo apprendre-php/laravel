@@ -300,3 +300,38 @@ Route::post('/recruit-player/sign', function (Request $request) {
 
     echo "<a href='/recruit-player'>Retour au formulaire de recrutement</a>";
 });
+
+// #7 Révision : Exercice 3
+
+Route::get('/monsters/create', function () {
+    echo "<h1>Création d'un monstre</h1>";
+
+    echo '<form action="/monsters" method="post">';
+    echo csrf_field();
+    echo '<label>Nom</label><br/>';
+    echo '<input type="text" name="name"/><br/><br/>';
+
+    echo '<label>Niveau</label><br/>';
+    echo '<input type="text" name="level"/><br/><br/>';
+
+    echo '<label>Santé</label><br/>';
+    echo '<input type="text" name="health"/><br/><br/>';
+
+    echo '<label>Puissance</label><br/>';
+    echo '<input type="text" name="power"/><br/><br/>';
+
+    echo "<button type='submit'>Enregistrer</button>";
+    echo '</form>';
+});
+
+Route::post('/monsters', function (Request $request) {
+    $properties = $request->all([
+        'name', 'power', 'level', 'health',
+    ]);
+
+    $monster = \App\Models\Monster::create(
+        $properties
+    );
+
+    echo "Le monstre " . $monster->name . " a été créé.\n";
+});
