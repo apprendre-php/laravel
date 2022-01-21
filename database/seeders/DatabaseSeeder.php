@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ItemSeeder::class,
             GuildSeeder::class,
+            MonsterSeeder::class,
         ]);
     }
 }
