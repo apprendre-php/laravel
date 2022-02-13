@@ -9,14 +9,12 @@ class Item extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
-        'name',
+        'name', 'thumbnail', 'price', 'quantity', 'description',
     ];
 
-    public function users()
+    public function orders()
     {
-        return $this->belongsToMany(User::class)->withPivot('quantity');
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
     }
 }

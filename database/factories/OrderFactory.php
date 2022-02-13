@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Guild;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GuildFactory extends Factory
+class OrderFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Guild::class;
+    protected $model = Order::class;
 
     /**
      * Define the model's default state.
@@ -22,13 +22,7 @@ class GuildFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique->randomElement([
-                'La compagnie du trésor',
-                'Les corsairs',
-                'Roxxxooorrs',
-                'No name',
-                'Vitality Bee',
-            ]),
+            'number' => $this->faker->numerify('CMD-####'),
         ];
     }
 }

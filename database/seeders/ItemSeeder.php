@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Item;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ItemSeeder extends Seeder
@@ -15,15 +14,8 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
-        $items = Item::factory()
-            ->count(20)
+        Item::factory()
+            ->count(4)
             ->create();
-
-        User::all()->each(function (User $user) use ($items) {
-            $user->items()->attach(
-                $items->random(5),
-                ['quantity' => 1]
-            );
-        });
     }
 }

@@ -20,9 +20,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'health',
-        'level',
-        'power',
     ];
 
     /**
@@ -44,18 +41,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role()
+    public function orders()
     {
-        return $this->belongsTo(Role::class);
-    }
-
-    public function guilds()
-    {
-        return $this->belongsToMany(Guild::class)->withTimestamps();
-    }
-
-    public function items()
-    {
-        return $this->belongsToMany(Item::class)->withPivot('quantity');
+        return $this->hasMany(Order::class);
     }
 }

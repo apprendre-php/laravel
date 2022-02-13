@@ -23,28 +23,15 @@ class ItemFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->randomElement([
-                'Bouclier',
-                'Bottes',
-                'Baguette trop grosse',
-                'Potion de soin',
-                'Arc',
-                'Epée',
-                'Elixir de force',
-                'Bandage',
-                'Marteau de bronze',
-                'Dagues',
-                'Anneau de robustesse',
-                'Salade de fruit',
-                'Cape',
-                'Happy Meal',
-                'Baton du vide',
-                'Faux spectral',
-                'Cookie',
-                'Collier de regénération',
-                "Lame d'infini",
-                "Coiffe de puissance",
-                'Coques en acier',
+                'Clavier',
+                'Souris',
+                'PC Portable',
+                'Carte graphique',
             ]),
+            'thumbnail' => $this->faker->imageUrl(),
+            'price' => $this->faker->randomFloat(2, 1, 5000),
+            'quantity' => $this->faker->randomNumber(3),
+            'description' => $this->faker->sentence(),
         ];
     }
 }
