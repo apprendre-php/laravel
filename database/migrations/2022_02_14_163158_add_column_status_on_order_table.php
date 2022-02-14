@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemOrderTable extends Migration
+class AddColumnStatusOnOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateItemOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_order', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('item_id')->constrained();
-            $table->foreignId('order_id')->constrained();
-            $table->integer('quantity');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string('status')->default('active');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateItemOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_order');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 }
