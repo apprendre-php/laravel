@@ -15,3 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\ItemController::class, 'index'])
     ->name('items.index');
+
+Route::get('/items/{item}', [\App\Http\Controllers\ItemController::class, 'show'])
+    ->name('items.show');
+
