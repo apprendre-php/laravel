@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\ItemController::class, 'index'])
     ->name('items.index');
 
+Route::get('/items/create', [\App\Http\Controllers\ItemController::class, 'create'])
+    ->name('items.create');
+
+Route::post('/items', [\App\Http\Controllers\ItemController::class, 'store'])
+    ->name('items.store');
+
 Route::get('/items/{item}', [\App\Http\Controllers\ItemController::class, 'show'])
     ->name('items.show');
 
