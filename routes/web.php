@@ -27,3 +27,17 @@ Route::get('/items/{item}', [\App\Http\Controllers\ItemController::class, 'show'
 
 Route::delete('/items/{item}', [\App\Http\Controllers\ItemController::class, 'destroy'])
     ->name('items.destroy');
+
+Route::get('/register', [\App\Http\Controllers\RegisterController::class, 'create'])
+    ->name('register.create');
+
+Route::post('/register', [\App\Http\Controllers\RegisterController::class, 'store'])
+    ->name('register.store');
+
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'loginForm'])
+    ->name('login');
+
+Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
+
+Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout'])
+    ->name('logout');

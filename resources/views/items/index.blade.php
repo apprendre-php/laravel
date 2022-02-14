@@ -10,8 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
 </head>
 <body class="antialiased">
-<header class="text-center bg-blue-800 text-white font-bold text-3xl py-4" style="font-family: 'Carter One', cursive;">
-    <a href="/">My Digital Shop</a>
+<header class="bg-blue-800 text-white p-4 flex items-center" style="font-family: 'Carter One', cursive;">
+    <a class="font-bold text-3xl flex-grow" href="/">My Digital Shop</a>
+    <?php if (Auth::check()) : ?>
+    <div class="mr-4"><?= Auth::user()->name ?></div>
+    <form action="<?= route('logout') ?>" method="post">
+        <?= csrf_field() ?>
+        <button class="underline">Se déconnecter</button>
+    </form>
+    <?php else : ?>
+    <a class="underline mr-4" href="<?= route('register.create') ?>">S'enregistrer</a>
+    <a class="underline" href="<?= route('login') ?>">Se connecter</a>
+    <?php endif; ?>
 </header>
 <div class="p-8 grid grid-cols-8 gap-4">
     <?php foreach($items as $item): ?>
