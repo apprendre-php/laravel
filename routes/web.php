@@ -25,3 +25,5 @@ Route::post('/items', [\App\Http\Controllers\ItemController::class, 'store'])
 Route::get('/items/{item}', [\App\Http\Controllers\ItemController::class, 'show'])
     ->name('items.show');
 
+Route::delete('/items/{item}', [\App\Http\Controllers\ItemController::class, 'destroy'])
+    ->name('items.destroy');

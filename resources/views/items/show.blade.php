@@ -25,6 +25,15 @@
             </ul>
         </div>
     </div>
+    <div class="mt-4 w-1/3">
+        <form action="<?= route('items.destroy', $item) ?>" method="post">
+            <?= csrf_field() ?>
+            <?= method_field('delete') ?>
+            <button type="submit" class="text-center w-full text-white uppercase bg-red-800 font-bold py-3 hover:bg-red-500">
+                Supprimer
+            </button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
