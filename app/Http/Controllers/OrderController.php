@@ -33,4 +33,11 @@ class OrderController extends Controller
 
         return redirect()->route('items.index');
     }
+
+    public function checkout(Order $order)
+    {
+        $order->update(['status' => 'paid']);
+
+        return back();
+    }
 }

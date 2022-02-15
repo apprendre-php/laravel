@@ -53,3 +53,6 @@ Route::get('/orders/{order}', [\App\Http\Controllers\OrderController::class, 'sh
 
 Route::post('/orders/add/{item}', [\App\Http\Controllers\OrderController::class, 'addItem'])
     ->name('orders.addItem');
+
+Route::get('/orders/{order}/checkout', [\App\Http\Controllers\OrderController::class, 'checkout'])
+    ->name('orders.checkout');

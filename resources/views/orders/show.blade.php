@@ -30,6 +30,9 @@
         <li>Numéro: <?= $order->number ?></li>
         <li>Date de création: <?= $order->created_at->format('d/m/Y') ?></li>
     </ul>
+    <div class="mb-4 w-1/3">
+        <a href="{{ route('orders.checkout', $order) }}" class="text-center text-white uppercase bg-yellow-500 font-bold py-3 hover:bg-yellow-300">Payer la commande</a>
+    </div>
     <h2 class="text-blue-800 text-2xl mb-4">Liste des articles</h2>
     <table class="w-full">
         <thead>
