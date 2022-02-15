@@ -25,21 +25,39 @@
     <?php endif; ?>
 </header>
 <div class="p-4">
+    <h2 class="text-blue-800 text-2xl mb-4">Information de l'utilisateur</h2>
+    <ul class="mb-4">
+        <li>Nom: <?= $user->name ?></li>
+        <li>Email: <?= $user->email ?></li>
+    </ul>
+    <h2 class="text-blue-800 text-2xl mb-4">Commandes de l'utilisateur</h2>
     <table class="w-full">
         <thead>
         <tr class="border border-gray-200 bg-gray-200 text-gray-600 uppercase text-sm">
-            <th class="py-3 px-6">Nom</th>
-            <th class="py-3 px-6">Email</th>
+            <th class="py-3 px-6">Numéro de commande</th>
+            <th class="py-3 px-6">Date de création</th>
+            <th class="py-3 px-6">Nombre d'articles</th>
+            <th class="py-3 px-6">Prix</th>
+            <th class="py-3 px-6">Statut</th>
         </tr>
         </thead>
         <tbody class="bg-white text-sm md:text-base">
-        <?php foreach($users as $user): ?>
+        <?php foreach($user->orders as $order): ?>
         <tr>
             <td class="py-3 px-6 border border-gray-200 text-left">
-                <a class="underline text-blue-800 hover:text-blue-500" href="<?= route('users.show', $user) ?>"><?= $user->name ?></a>
+                <?= $order->number ?>
             </td>
             <td class="py-3 px-6 border border-gray-200 text-left">
-                <?= $user->email ?>
+                <?= $order->created_at->format('d/m/Y') ?>
+            </td>
+            <td class="py-3 px-6 border border-gray-200 text-left">
+                <?= $order->countTotalItems() ?>
+            </td>
+            <td class="py-3 px-6 border border-gray-200 text-left">
+                <?= $order->getPrice() ?> €
+            </td>
+            <td class="py-3 px-6 border border-gray-200 text-left">
+                <?= $order->status ?>
             </td>
         </tr>
         <?php endforeach; ?>

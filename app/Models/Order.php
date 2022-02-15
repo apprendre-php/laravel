@@ -22,4 +22,26 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function countTotalItems(): int
+    {
+        $count = 0;
+
+        foreach ($this->items as $item) {
+            $count += $item->pivot->quantity;
+        }
+
+        return $count;
+    }
+
+    public function getPrice(): float
+    {
+        $price = 0;
+
+        foreach ($this->items as $item) {
+            $price += $item->pivot->quantity * $item->price;
+        }
+
+        return $price;
+    }
 }
