@@ -50,3 +50,6 @@ Route::get('/users/{user}', [\App\Http\Controllers\UserController::class, 'show'
 
 Route::get('/orders/{order}', [\App\Http\Controllers\OrderController::class, 'show'])
     ->name('orders.show');
+
+Route::post('/orders/add/{item}', [\App\Http\Controllers\OrderController::class, 'addItem'])
+    ->name('orders.addItem');
