@@ -28,12 +28,28 @@
     <div class="flex">
         <img class="w-40" src="<?= $item->thumbnail ?>"/>
         <div class="p-8">
-            <p class="mb-4"><?= $item->description ?></p>
+            <div class="mb-4 text-gray-500"><?= $item->description ?></div>
             <ul>
-                <li>Prix: <?= $item->price ?> €</li>
-                <li>Quantité: <?= $item->quantity ?></li>
+                <li><?= $item->quantity ?> unités en stock</li>
             </ul>
         </div>
+        <?php if (Auth::check()): ?>
+        <div class="bg-blue-100 p-4">
+            <div class="text-center font-bold text-4xl text-blue-800"><?= $item->price ?> €</div>
+            <div>
+                <form action="<?= route('orders.addItem', $item) ?>" method="post">
+                    <?= csrf_field() ?>
+                    <div class="flex items-center mb-4">
+                        <label class="mr-4" for="quantity">Quantité:</label>
+                        <input name="quantity" class="appearance-none block w-full border border-gray-200 text-gray-800 py-3 px-4 leading-tight focus:outline-none focus:border-gray-600 block mt-1 w-full" id="quantity" type="number" value="1">
+                    </div>
+                    <button type="submit" class="text-center w-full rounded-xl p-2 text-white uppercase bg-yellow-500 font-bold py-3 hover:bg-yellow-300">
+                        Ajouter au panier
+                    </button>
+                </form>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
     <div class="mt-4 w-1/3">
         <form action="<?= route('items.destroy', $item) ?>" method="post">
