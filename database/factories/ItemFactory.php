@@ -22,7 +22,7 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique()->randomElement([
+            'name' => $this->faker->randomElement([
                 'Clavier',
                 'Souris',
                 'PC Portable',

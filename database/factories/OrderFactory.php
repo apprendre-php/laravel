@@ -23,6 +23,7 @@ class OrderFactory extends Factory
     {
         return [
             'number' => $this->faker->numerify('CMD-####'),
+            'status' => 'paid',
         ];
     }
 }
