@@ -24,24 +24,27 @@
     <a class="underline" href="<?= route('login') ?>">Se connecter</a>
     <?php endif; ?>
 </header>
-<div class="p-8 grid grid-cols-8 gap-4">
-    <?php foreach($items as $item): ?>
-    <div class="border border-gray-300">
-        <div class="h-32 bg-cover bg-center" style="background-image: url(<?= $item->thumbnail ?>)">&nbsp;</div>
-        <div class="p-2">
-            <a class="underline text-blue-800 hover:text-blue-500" href="<?= route('items.show', $item) ?>"><?= $item->name ?></a>
-        </div>
-        <ul class="p-2">
-            <li>Prix: <?= $item->price ?> €</li>
-            <li>Quantité: <?= $item->quantity ?></li>
-        </ul>
-    </div>
-    <?php endforeach; ?>
-    <a class="border border-gray-300 flex items-center justify-center text-blue-800 hover:text-blue-500" href="<?= route('items.create') ?>">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-    </a>
+<div class="p-4">
+    <table class="w-full">
+        <thead>
+        <tr class="border border-gray-200 bg-gray-200 text-gray-600 uppercase text-sm">
+            <th class="py-3 px-6">Nom</th>
+            <th class="py-3 px-6">Email</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white text-sm md:text-base">
+        <?php foreach($users as $user): ?>
+        <tr>
+            <td class="py-3 px-6 border border-gray-200 text-left">
+                <?= $user->name ?>
+            </td>
+            <td class="py-3 px-6 border border-gray-200 text-left">
+                <?= $user->email ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

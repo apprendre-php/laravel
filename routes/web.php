@@ -41,3 +41,6 @@ Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
 
 Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout'])
     ->name('logout');
+
+Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])
+    ->name('users.index');
