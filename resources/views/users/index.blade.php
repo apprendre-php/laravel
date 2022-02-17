@@ -12,7 +12,7 @@
         @foreach($users as $user)
         <tr>
             <td class="py-3 px-6 border border-gray-200 text-left">
-                <a class="underline text-blue-800 hover:text-blue-500" href="<?= route('users.show', $user) ?>"><?= $user->name ?></a>
+                <x-a href="{{ route('users.show', $user) }}">{{ $user->name }}</x-a>
             </td>
             <td class="py-3 px-6 border border-gray-200 text-left">
                 {{ $user->email }}

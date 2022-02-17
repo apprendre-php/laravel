@@ -21,7 +21,7 @@
         @foreach($user->orders as $order)
         <tr>
             <td class="py-3 px-6 border border-gray-200 text-left">
-                <a href="{{ route('orders.show', $order) }}" class="underline text-blue-800 hover:text-blue-500">{{ $order->number }}</a>
+                <x-a href="{{ route('orders.show', $order) }}">{{ $order->number }}</x-a>
             </td>
             <td class="py-3 px-6 border border-gray-200 text-left">
                 {{ $order->created_at->format('d/m/Y') }}

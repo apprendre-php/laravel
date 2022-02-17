@@ -6,7 +6,7 @@
         <div class="border border-gray-300">
             <div class="h-32 bg-cover bg-center" style="background-image: url({{ $item->thumbnail }})">&nbsp;</div>
             <div class="p-2">
-                <a class="underline text-blue-800 hover:text-blue-500" href="{{ route('items.show', $item) }}">{{ $item->name }}</a>
+                <x-a href="{{ route('items.show', $item) }}">{{ $item->name }}</x-a>
             </div>
             <ul class="p-2">
                 <li>Prix: {{ $item->price }} €</li>
