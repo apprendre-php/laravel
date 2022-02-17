@@ -8,34 +8,25 @@
             <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="name">
                 Nom
             </label>
-            <input name="name" class="appearance-none block w-full border border-gray-200 text-gray-800 py-3 px-4 leading-tight focus:outline-none focus:border-gray-600 block mt-1 w-full" id="name" type="text" value="<?= old('name') ?>">
-            <?php if($errors->first('name')): ?>
-                <span class="text-red-500 text-sm font-semibold"><?= $errors->first('name') ?></span>
-            <?php endif; ?>
+            <x-input id="name" type="text" name="name" :value="old('name')" required autofocus />
         </div>
         <div class="mt-4">
             <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="email">
                 Email
             </label>
-            <input name="email" class="appearance-none block w-full border border-gray-200 text-gray-800 py-3 px-4 leading-tight focus:outline-none focus:border-gray-600 block mt-1 w-full" id="email" type="text" value="<?= old('email') ?>">
-            <?php if($errors->first('email')): ?>
-                <span class="text-red-500 text-sm font-semibold"><?= $errors->first('email') ?></span>
-            <?php endif; ?>
+            <x-input id="email" type="email" name="email" :value="old('email')" required />
         </div>
         <div class="mt-4">
             <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="password">
                 Mot de passe
             </label>
-            <input name="password" class="appearance-none block w-full border border-gray-200 text-gray-800 py-3 px-4 leading-tight focus:outline-none focus:border-gray-600 block mt-1 w-full" id="password" type="password" value="<?= old('password') ?>">
-            <?php if($errors->first('password')): ?>
-                <span class="text-red-500 text-sm font-semibold"><?= $errors->first('password') ?></span>
-            <?php endif; ?>
+            <x-input id="password" type="password" name="password" :value="old('password')" required />
         </div>
         <div class="mt-4">
             <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="password_confirmation">
                 Confirmation
             </label>
-            <input name="password_confirmation" class="appearance-none block w-full border border-gray-200 text-gray-800 py-3 px-4 leading-tight focus:outline-none focus:border-gray-600 block mt-1 w-full" id="password_confirmation" type="password" value="<?= old('password_confirmation') ?>">
+            <x-input id="password_confirmation" type="password" name="password_confirmation" :value="old('password_confirmation')" required />
         </div>
         <div class="mt-4">
             <button type="submit" class="text-center w-full text-white uppercase bg-blue-800 font-bold py-3 hover:bg-blue-500">
