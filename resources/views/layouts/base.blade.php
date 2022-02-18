@@ -22,6 +22,9 @@
             <a class="underline" href="{{ route('login') }}">Se connecter</a>
         @endauth
     </header>
+    @if (session()->has('alert'))
+        <x-alert :type="session()->get('alert')['type']" :message="session()->get('alert')['message']"/>
+    @endif
     <div class="p-4">
         @yield('content')
     </div>

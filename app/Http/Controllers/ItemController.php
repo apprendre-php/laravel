@@ -36,7 +36,9 @@ class ItemController extends Controller
             'description' => 'required',
         ]);
 
-        Item::create($inputs);
+        $item = Item::create($inputs);
+
+        $request->session()->flash('alert', ['type' => 'success', 'message' => "L'article $item->name a été créé."]);
 
         return redirect()->route('items.index');
     }

@@ -31,12 +31,19 @@ class OrderController extends Controller
 
         DB::commit();
 
+        $request->session()->flash('alert', [
+            'type' => 'info',
+            'message' => sprintf("L'article %s a été ajouté en %s exemplaires.", $item->name, $inputs['quantity'])
+        ]);
+
         return redirect()->route('items.index');
     }
 
-    public function checkout(Order $order)
+    public function checkout(Order $order, Request $request)
     {
         $order->update(['status' => 'paid']);
+
+        $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglé."]);
 
         return back();
     }
