@@ -25,6 +25,12 @@ Route::post('/items', [\App\Http\Controllers\ItemController::class, 'store'])
 Route::get('/items/{item}', [\App\Http\Controllers\ItemController::class, 'show'])
     ->name('items.show');
 
+Route::get('/items/{item}/edit', [\App\Http\Controllers\ItemController::class, 'edit'])
+    ->name('items.edit');
+
+Route::put('/items/{item}', [\App\Http\Controllers\ItemController::class, 'update'])
+    ->name('items.update');
+
 Route::delete('/items/{item}', [\App\Http\Controllers\ItemController::class, 'destroy'])
     ->name('items.destroy');
 

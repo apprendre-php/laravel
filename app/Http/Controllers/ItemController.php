@@ -32,7 +32,7 @@ class ItemController extends Controller
             'name' => 'required',
             'thumbnail' => 'required|url',
             'price' => 'required|numeric',
-            'quantity' => 'required|integer|min:0',
+            'quantity' => 'required|integer|gte:0',
             'description' => 'required',
         ]);
 
@@ -48,6 +48,28 @@ class ItemController extends Controller
         $item = Item::findOrFail($id);
 
         $item->delete();
+
+        return redirect()->route('items.index');
+    }
+
+    public function edit(Item $item)
+    {
+        return view('items.edit', ['item' => $item]);
+    }
+
+    public function update(Item $item, Request $request)
+    {
+        $inputs = $request->validate([
+            'name' => 'required',
+            'thumbnail' => 'required|url',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer|gte:0',
+            'description' => 'required',
+        ]);
+
+        $item->update($inputs);
+
+        $request->session()->flash('alert', ['type' => 'success', 'message' => "L'article $item->name a été modifié."]);
 
         return redirect()->route('items.index');
     }

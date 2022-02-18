@@ -28,11 +28,12 @@
             </div>
         @endauth
     </div>
-    <div class="mt-4 w-1/3">
-        <form action="{{ route('items.destroy', $item) }}" method="post">
+    <div class="mt-4 w-1/3 flex justify-between">
+        <a href="{{ route('items.edit', $item) }}" class="block w-1/2 mr-4 text-center text-white uppercase bg-blue-800 font-bold p-3 hover:bg-blue-500">Editer</a>
+        <form class="block w-1/2" action="{{ route('items.destroy', $item) }}" method="post">
             @csrf
             {{ method_field('delete') }}
-            <button type="submit" class="text-center w-full text-white uppercase bg-red-800 font-bold py-3 hover:bg-red-500">
+            <button type="submit" class="text-center w-full text-white uppercase bg-red-800 font-bold p-3 hover:bg-red-500">
                 Supprimer
             </button>
         </form>
