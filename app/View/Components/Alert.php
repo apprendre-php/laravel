@@ -28,12 +28,17 @@ class Alert extends Component
      */
     public function render()
     {
-        $color = match ($this->type) {
-            'success' => 'green',
-            'warning' => 'yellow',
-            'error' => 'red',
-            default => 'blue',
-        };
+        switch ($this->type) {
+            case 'warning':
+                $color = 'yellow';
+                break;
+            case 'error':
+                $color = 'red';
+                break;
+            default:
+                $color = 'blue';
+                break;
+        }
 
         return view('components.alert', ['color' => $color]);
     }
