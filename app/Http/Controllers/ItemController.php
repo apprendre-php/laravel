@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewCreateItem;
 use App\Models\Item;
 use Illuminate\Http\Request;
 
@@ -37,6 +38,8 @@ class ItemController extends Controller
         ]);
 
         $item = Item::create($inputs);
+
+        NewCreateItem::dispatch($item);
 
         $request->session()->flash('alert', ['type' => 'success', 'message' => "L'article $item->name a été créé."]);
 
