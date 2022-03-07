@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\AddToCart;
 use App\Events\NewCreateItem;
 use App\Listeners\LogCreateNewItem;
+use App\Listeners\LogNewAddItemToCart;
+use App\Listeners\LogStockAlertItem;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         NewCreateItem::class => [
             LogCreateNewItem::class,
+        ],
+        AddToCart::class => [
+            LogNewAddItemToCart::class,
+            LogStockAlertItem::class,
         ],
     ];
 

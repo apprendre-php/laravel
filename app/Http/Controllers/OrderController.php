@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AddToCart;
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -30,6 +31,8 @@ class OrderController extends Controller
         $item->decrement('quantity', $inputs['quantity']);
 
         DB::commit();
+
+        AddToCart::dispatch($request->user(), $item, $inputs['quantity']);
 
         $request->session()->flash('alert', [
             'type' => 'info',
