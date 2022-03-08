@@ -4,9 +4,12 @@ namespace App\Providers;
 
 use App\Events\AddToCart;
 use App\Events\NewCreateItem;
+use App\Events\SendReportFinish;
+use App\Listeners\DeleteReport;
 use App\Listeners\LogCreateNewItem;
 use App\Listeners\LogNewAddItemToCart;
 use App\Listeners\LogStockAlertItem;
+use App\Listeners\UpdateReportStatus;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -29,6 +32,10 @@ class EventServiceProvider extends ServiceProvider
         AddToCart::class => [
             LogNewAddItemToCart::class,
             LogStockAlertItem::class,
+        ],
+        SendReportFinish::class => [
+            UpdateReportStatus::class,
+            DeleteReport::class,
         ],
     ];
 

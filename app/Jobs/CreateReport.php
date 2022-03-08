@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Report;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -32,5 +33,10 @@ class CreateReport implements ShouldQueue
         $csv->insertAll($this->items);
 
         Storage::disk('local')->put($this->fileName,  $csv->toString());
+
+        Report::create([
+            'filename' => $this->fileName,
+            'status' => 'waiting',
+        ]);
     }
 }
