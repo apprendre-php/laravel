@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Order;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Jobs\SendReviewCommande;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -44,6 +45,8 @@ class OrderController extends Controller
         $order->update(['status' => 'paid']);
 
         $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglé."]);
+
+        SendReviewCommande::dispatch($order);
 
         return back();
     }

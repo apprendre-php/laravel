@@ -62,3 +62,9 @@ Route::post('/orders/add/{item}', [\App\Http\Controllers\OrderController::class,
 
 Route::get('/orders/{order}/checkout', [\App\Http\Controllers\OrderController::class, 'checkout'])
     ->name('orders.checkout');
+
+Route::get('/cart', [\App\Http\Controllers\CartController::class, 'show'])
+    ->name('cart.show');
+
+Route::get('/cart/{order}/delete', [\App\Http\Controllers\CartController::class, 'delete'])
+    ->name('cart.delete');

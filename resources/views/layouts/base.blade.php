@@ -17,6 +17,13 @@
                 @csrf
                 <button class="underline">Se déconnecter</button>
             </form>
+            @if( Auth::user()->orders()->where('status', 'active')->first() && Auth::user()->orders()->where('status', 'active')->first()->status === 'active')
+            <?php 
+            $order = Auth::user()->orders()->where('status', 'active')->first();
+            $nbItem = $order->items->count(); 
+            ?>
+            <a class="underline ml-4" href="{{ route('cart.show') }}">Panier {{$nbItem}}</a>
+            @endif
         @else
             <a class="underline mr-4" href="{{ route('register.create') }}">S'enregistrer</a>
             <a class="underline" href="{{ route('login') }}">Se connecter</a>
