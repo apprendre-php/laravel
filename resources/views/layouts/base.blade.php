@@ -12,6 +12,12 @@
         <a class="font-bold text-3xl flex-grow" href="/">My Digital Shop</a>
         <a class="underline mr-4" href="{{ route('users.index') }}">Utilisateurs</a>
         @auth
+
+            @if($order)
+            <div class="mr-4">
+                <a class="underline mr-4" href="{{ route('cart.show') }}">Panier({{$order->items->count()}} ) </a> </div>
+            @endif
+
             <div class="mr-4">{{ Auth::user()->name }}</div>
             <form action="{{ route('logout') }}" method="post">
                 @csrf
