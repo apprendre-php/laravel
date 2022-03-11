@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AddToCart;
+use App\Jobs\SendCommand;
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -46,8 +47,9 @@ class OrderController extends Controller
     {
         $order->update(['status' => 'paid']);
 
+        SendCommand::dispatch($order,$request);
         $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglé."]);
 
-        return back();
+        return redirect()->route('items.index');
     }
 }
