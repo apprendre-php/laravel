@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AddToCart;
 use App\Models\Item;
 use App\Models\Order;
+use App\Events\AddToCart;
+use App\Jobs\CreateReport;
+use App\Events\cancelOrder;
+use App\Jobs\sendMailRecap;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function show(Order $order)
-    {
-        return view('orders.show', ['order' => $order]);
-    }
-
     public function addItem(Item $item, Request $request)
     {
         $inputs = $request->validate([
@@ -46,7 +45,19 @@ class OrderController extends Controller
     {
         $order->update(['status' => 'paid']);
 
-        $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglé."]);
+        $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglée."]);
+
+        sendMailRecap::dispatch($order,Auth::user());
+
+        return back();
+    }
+
+    public function cancel(Order $order, Request $request){
+        $order->update(['status' => 'cancelled']);
+
+        $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été annulée."]);
+
+        cancelOrder::dispatch($order);
 
         return back();
     }
