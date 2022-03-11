@@ -6,74 +6,83 @@ use App\Events\NewCreateItem;
 use App\Models\Item;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
-{
-    public function index()
-    {
-        $items = Item::all();
+class ItemController extends Controller {
 
-        return view('items.index', ['items' => $items]);
-    }
+	public function index() {
+		$items = Item::all();
 
-    public function show(int $id)
-    {
-        $item = Item::findOrFail($id);
+		return view( 'items.index', array( 'items' => $items ) );
+	}
 
-        return view('items.show', ['item' => $item]);
-    }
+	public function show( int $id ) {
+		$item = Item::findOrFail( $id );
 
-    public function create()
-    {
-        return view('items.create');
-    }
+		return view( 'items.show', array( 'item' => $item ) );
+	}
 
-    public function store(Request $request)
-    {
-        $inputs = $request->validate([
-            'name' => 'required',
-            'thumbnail' => 'required|url',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer|gte:0',
-            'description' => 'required',
-        ]);
+	public function create() {
+		return view( 'items.create' );
+	}
 
-        $item = Item::create($inputs);
+	public function store( Request $request ) {
+		$inputs = $request->validate(
+			array(
+				'name'        => 'required',
+				'thumbnail'   => 'required|url',
+				'price'       => 'required|numeric',
+				'quantity'    => 'required|integer|gte:0',
+				'description' => 'required',
+			)
+		);
 
-        NewCreateItem::dispatch($item);
+		$item = Item::create( $inputs );
 
-        $request->session()->flash('alert', ['type' => 'success', 'message' => "L'article $item->name a été créé."]);
+		NewCreateItem::dispatch( $item );
 
-        return redirect()->route('items.index');
-    }
+		$request->session()->flash(
+			'alert',
+			array(
+				'type'    => 'success',
+				'message' => "L'article $item->name a été créé.",
+			)
+		);
 
-    public function destroy(int $id)
-    {
-        $item = Item::findOrFail($id);
+		return redirect()->route( 'items.index' );
+	}
 
-        $item->delete();
+	public function destroy( int $id ) {
+		$item = Item::findOrFail( $id );
 
-        return redirect()->route('items.index');
-    }
+		$item->delete();
 
-    public function edit(Item $item)
-    {
-        return view('items.edit', ['item' => $item]);
-    }
+		return redirect()->route( 'items.index' );
+	}
 
-    public function update(Item $item, Request $request)
-    {
-        $inputs = $request->validate([
-            'name' => 'required',
-            'thumbnail' => 'required|url',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer|gte:0',
-            'description' => 'required',
-        ]);
+	public function edit( Item $item ) {
+		return view( 'items.edit', array( 'item' => $item ) );
+	}
 
-        $item->update($inputs);
+	public function update( Item $item, Request $request ) {
+		$inputs = $request->validate(
+			array(
+				'name'        => 'required',
+				'thumbnail'   => 'required|url',
+				'price'       => 'required|numeric',
+				'quantity'    => 'required|integer|gte:0',
+				'description' => 'required',
+			)
+		);
 
-        $request->session()->flash('alert', ['type' => 'success', 'message' => "L'article $item->name a été modifié."]);
+		$item->update( $inputs );
 
-        return redirect()->route('items.index');
-    }
+		$request->session()->flash(
+			'alert',
+			array(
+				'type'    => 'success',
+				'message' => "L'article $item->name a été modifié.",
+			)
+		);
+
+		return redirect()->route( 'items.index' );
+	}
 }
