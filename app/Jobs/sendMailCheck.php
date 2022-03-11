@@ -2,11 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\OrderController;
 use App\Models\Report;
-use App\Mail\ReportItems;
 use App\Mail\ReportOrder;
 use Illuminate\Bus\Queueable;
-use App\Events\SendReportFinish;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,11 +14,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 
-class SendReport implements ShouldQueue
+class sendMailCheck implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    private $report;
 
     public function __construct(Report $report)
     {
@@ -27,8 +25,7 @@ class SendReport implements ShouldQueue
 
     public function handle()
     {
-        Mail::to('tom@mds.fr')->send(new ReportOrder($this->report));
+        Mail::to(Auth::user()->email)->send(new ReportOrder($this->report));
 
-        SendReportFinish::dispatch($this->report);
     }
 }

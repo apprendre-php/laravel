@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', [\App\Http\Controllers\ItemController::class, 'index'])
     ->name('items.index');
 
@@ -62,3 +63,11 @@ Route::post('/orders/add/{item}', [\App\Http\Controllers\OrderController::class,
 
 Route::get('/orders/{order}/checkout', [\App\Http\Controllers\OrderController::class, 'checkout'])
     ->name('orders.checkout');
+
+//TP
+Route::get('/cart', [\App\Http\Controllers\CartController::class, 'show'])
+    ->name('cart.showCart');
+
+Route::get('/cart/cancelled/{order}', [\App\Http\Controllers\CartController::class, 'cancelled'])
+    ->name('cart.cancelled');
+

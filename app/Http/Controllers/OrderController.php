@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AddToCart;
 use App\Models\Item;
 use App\Models\Order;
+use App\Events\AddToCart;
+use App\Jobs\sendMailCheck;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -47,6 +48,8 @@ class OrderController extends Controller
         $order->update(['status' => 'paid']);
 
         $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglé."]);
+
+        sendMailCheck::dispatch();
 
         return back();
     }
