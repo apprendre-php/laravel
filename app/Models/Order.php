@@ -34,7 +34,7 @@ class Order extends Model
         return $count;
     }
 
-    public function getPrice(): float
+    public function getPrice($taxes = false): float
     {
         $price = 0;
 
@@ -42,6 +42,10 @@ class Order extends Model
             $price += $item->pivot->quantity * $item->price;
         }
 
-        return $price;
+        if ($taxes) {
+            return $price * (1 + (20 / 100));
+        } else {
+            return $price;
+        }
     }
 }

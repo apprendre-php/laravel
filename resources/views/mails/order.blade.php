@@ -1,14 +1,24 @@
-@extends('layouts.base')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-<h2 class="text-blue-800 text-2xl mb-4">Information de la commande</h2>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<h2 class="text-blue-800 text-2xl mb-4">Récapitulatif de la commande</h2>
 <ul class="mb-4">
     <li>Numéro: {{ $order->number }}</li>
     <li>Date de création: {{ $order->created_at->format('d/m/Y') }}</li>
 </ul>
-<div class="mb-4 w-1/3">
-    <a href="{{ route('orders.checkout', $order) }}" class="px-2 text-center text-white uppercase bg-yellow-500 font-bold py-3 hover:bg-yellow-300">Payer la commande</a>
-</div>
 <h2 class="text-blue-800 text-2xl mb-4">Liste des articles</h2>
 <table class="w-full">
     <thead>
@@ -37,6 +47,7 @@
 <div class="flex items-end flex-col mt-4 text-lg">
     <span>Prix HT : {{ $order->getPrice() }} €</span>
     <span class="font-bold">Prix TTC : {{ $order->getPrice(true) }} €</span>
-    <span>{{ $order->user()->email }}</span>
 </div>
-@endsection
+</body>
+
+</html>
