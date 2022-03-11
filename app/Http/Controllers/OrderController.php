@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\AddToCart;
+use App\Events\OrderCancelled;
+use App\Jobs\SendOrderMail;
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -19,7 +21,7 @@ class OrderController extends Controller
     public function addItem(Item $item, Request $request)
     {
         $inputs = $request->validate([
-            'quantity' => 'required|lte:'. $item->quantity,
+            'quantity' => 'required|lte:' . $item->quantity,
         ]);
 
         DB::beginTransaction();
@@ -46,8 +48,21 @@ class OrderController extends Controller
     {
         $order->update(['status' => 'paid']);
 
+        SendOrderMail::dispatch($order);
+
         $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglé."]);
 
-        return back();
+        return redirect()->route('items.index');
+    }
+
+    public function cancel(Order $order, Request $request)
+    {
+        $order->update(['status' => 'cancel']);
+
+        OrderCancelled::dispatch($order);
+
+        $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été annulé."]);
+
+        return redirect()->route('items.index');
     }
 }

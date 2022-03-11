@@ -62,3 +62,9 @@ Route::post('/orders/add/{item}', [\App\Http\Controllers\OrderController::class,
 
 Route::get('/orders/{order}/checkout', [\App\Http\Controllers\OrderController::class, 'checkout'])
     ->name('orders.checkout');
+
+Route::get('/orders/{order}/cancel', [\App\Http\Controllers\OrderController::class, 'cancel'])
+    ->name('orders.cancel');
+
+Route::get('/cart', [\App\Http\Controllers\CartController::class, 'show'])
+    ->name('cart.show');
