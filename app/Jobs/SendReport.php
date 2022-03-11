@@ -26,7 +26,7 @@ class SendReport implements ShouldQueue
 
     public function handle()
     {
-        Mail::to('tom@mds.fr')->send(new ReportItems($this->report));
+        Mail::to(Auth::user()->email)->send(new ReportItems($this->report));
 
         SendReportFinish::dispatch($this->report);
     }

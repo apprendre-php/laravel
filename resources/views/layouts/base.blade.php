@@ -1,3 +1,7 @@
+<?php
+    use App\Models\Order;
+    use Illuminate\Support\Facades\Auth;
+?>
 <!doctype html>
 <html>
 <head>
@@ -9,9 +13,20 @@
 </head>
 <body class="antialiased">
     <header class="bg-blue-800 text-white p-4 flex items-center" style="font-family: 'Carter One', cursive;">
-        <a class="font-bold text-3xl flex-grow" href="/">My Digital Shop</a>
+        <a class="font-bold text-3xl flex-grow" href="/laravel/public/">My Digital Shop</a>
         <a class="underline mr-4" href="{{ route('users.index') }}">Utilisateurs</a>
         @auth
+        <?php 
+            $user = Auth::user();
+            $order = Order::where('user_id',$user->id)->where('status','active')->first();
+            if($order){
+                $nbItem = $order->countTotalItems();
+            }
+            else{
+                $nbItem = 0;
+            }
+        ?>
+            <a class="underline mr-4" href="{{ route('cart.show') }}">Panier ({{ $nbItem }})</a>
             <div class="mr-4">{{ Auth::user()->name }}</div>
             <form action="{{ route('logout') }}" method="post">
                 @csrf

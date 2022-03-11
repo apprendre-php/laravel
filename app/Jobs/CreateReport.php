@@ -3,14 +3,15 @@
 namespace App\Jobs;
 
 use App\Models\Report;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
 use SplTempFileObject;
+use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 
 class CreateReport implements ShouldQueue
 {
@@ -23,6 +24,8 @@ class CreateReport implements ShouldQueue
     {
         $this->items = $items;
         $this->fileName = $fileName;
+        Log::info($items);
+        Log::info($fileName);
     }
 
     public function handle()
@@ -34,9 +37,11 @@ class CreateReport implements ShouldQueue
 
         Storage::disk('local')->put($this->fileName,  $csv->toString());
 
-        Report::create([
+        $report = Report::create([
             'filename' => $this->fileName,
             'status' => 'waiting',
         ]);
+
+        sendReport::dispatch($report);
     }
 }
