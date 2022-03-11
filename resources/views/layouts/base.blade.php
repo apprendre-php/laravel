@@ -10,6 +10,10 @@
 <body class="antialiased">
     <header class="bg-blue-800 text-white p-4 flex items-center" style="font-family: 'Carter One', cursive;">
         <a class="font-bold text-3xl flex-grow" href="/">My Digital Shop</a>
+        @if ($orderCart)
+            <a href="{{ route('cart.show') }}">Panier</a>
+            <p style="font-size: 10px;"> - {{ $orderCart->items->count() }}</p>
+        @endif
         <a class="underline mr-4" href="{{ route('users.index') }}">Utilisateurs</a>
         @auth
             <div class="mr-4">{{ Auth::user()->name }}</div>
