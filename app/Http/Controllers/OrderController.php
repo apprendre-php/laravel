@@ -2,52 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AddToCart;
 use App\Models\Item;
 use App\Models\Order;
+use App\Events\AddToCart;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use App\Listeners\ReincrementationItem;
+use App\Events\EventReincrementationItem;
 
-class OrderController extends Controller
-{
-    public function show(Order $order)
-    {
-        return view('orders.show', ['order' => $order]);
-    }
 
-    public function addItem(Item $item, Request $request)
-    {
-        $inputs = $request->validate([
-            'quantity' => 'required|lte:'. $item->quantity,
-        ]);
+class OrderController extends Controller {
 
-        DB::beginTransaction();
+	public function show( Order $order ) {
+		return view( 'orders.show', array( 'order' => $order ) );
+	}
 
-        $order = $request->user()->orders()->firstOrCreate(['status' => 'active'], ['number' => Str::random()]);
+	public function addItem( Item $item, Request $request ) {
+		$inputs = $request->validate(
+			array(
+				'quantity' => 'required|lte:' . $item->quantity,
+			)
+		);
 
-        $order->items()->attach($item, $inputs);
+		DB::beginTransaction();
 
-        $item->decrement('quantity', $inputs['quantity']);
+		$order = $request->user()->orders()->firstOrCreate( array( 'status' => 'active' ), array( 'number' => Str::random() ) );
 
-        DB::commit();
+		$order->items()->attach( $item, $inputs );
 
-        AddToCart::dispatch($request->user(), $item, $inputs['quantity']);
+		$item->decrement( 'quantity', $inputs['quantity'] );
 
-        $request->session()->flash('alert', [
-            'type' => 'info',
-            'message' => sprintf("L'article %s a été ajouté en %s exemplaires.", $item->name, $inputs['quantity'])
-        ]);
+		DB::commit();
 
-        return redirect()->route('items.index');
-    }
+		AddToCart::dispatch( $request->user(), $item, $inputs['quantity'] );
 
-    public function checkout(Order $order, Request $request)
-    {
-        $order->update(['status' => 'paid']);
+		$request->session()->flash(
+			'alert',
+			array(
+				'type'    => 'info',
+				'message' => sprintf( "L'article %s a été ajouté en %s exemplaires.", $item->name, $inputs['quantity'] ),
+			)
+		);
 
-        $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglé."]);
+		return redirect()->route( 'items.index' );
+	}
 
-        return back();
-    }
+	public function checkout( Order $order, Request $request ) {
+		$order->update( array( 'status' => 'paid' ) );
+
+		$request->session()->flash(
+			'alert',
+			array(
+				'type'    => 'info',
+				'message' => "La commande $order->number a été réglé.",
+			)
+		);
+
+		return back();
+	}
+
+	public function cancell( Order $order, Request $request ) {
+
+		$order->update( array( 'status' => 'cancelled' ) );
+		$request->session()->flash(
+			'alert',
+			array(
+				'type'    => 'info',
+				'message' => "La commande $order->number a été annulée.",
+			)
+		);
+
+		EventReincrementationItem::dispatch( $order );
+
+		return redirect()->route( 'items.index' );
+	}
 }
