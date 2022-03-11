@@ -54,11 +54,17 @@ Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])
 Route::get('/users/{user}', [\App\Http\Controllers\UserController::class, 'show'])
     ->name('users.show');
 
-Route::get('/orders/{order}', [\App\Http\Controllers\OrderController::class, 'show'])
-    ->name('orders.show');
-
 Route::post('/orders/add/{item}', [\App\Http\Controllers\OrderController::class, 'addItem'])
     ->name('orders.addItem');
 
 Route::get('/orders/{order}/checkout', [\App\Http\Controllers\OrderController::class, 'checkout'])
     ->name('orders.checkout');
+
+Route::get('/cart', [\App\Http\Controllers\CartController::class, 'show'])
+->name('cart.show');
+
+Route::put('/cart/{order}', [\App\Http\Controllers\CartController::class, 'update'])
+    ->name('cart.update');
+
+Route::get('/cart/{order}/cancelled', [\App\Http\Controllers\CartController::class, 'cancelled'])
+->name('cart.cancelled');

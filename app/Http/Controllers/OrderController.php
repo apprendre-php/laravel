@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AddToCart;
+use App\Jobs\MailWhereOrderPayed;
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class OrderController extends Controller
 {
     public function show(Order $order)
     {
-        return view('orders.show', ['order' => $order]);
+        //
     }
 
     public function addItem(Item $item, Request $request)
@@ -45,6 +46,8 @@ class OrderController extends Controller
     public function checkout(Order $order, Request $request)
     {
         $order->update(['status' => 'paid']);
+
+        MailWhereOrderPayed::dispatch($order);
 
         $request->session()->flash('alert', ['type' => 'info', 'message' => "La commande $order->number a été réglé."]);
 

@@ -4,16 +4,18 @@ namespace App\Providers;
 
 use App\Events\AddToCart;
 use App\Events\NewCreateItem;
-use App\Events\SendReportFinish;
+use App\Events\GetResetQuantity;
 use App\Listeners\DeleteReport;
+use App\Events\SendReportFinish;
 use App\Listeners\LogCreateNewItem;
-use App\Listeners\LogNewAddItemToCart;
 use App\Listeners\LogStockAlertItem;
 use App\Listeners\UpdateReportStatus;
+use Illuminate\Support\Facades\Event;
+use App\Listeners\LogNewAddItemToCart;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\ResetQuantity;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -36,6 +38,9 @@ class EventServiceProvider extends ServiceProvider
         SendReportFinish::class => [
             UpdateReportStatus::class,
             DeleteReport::class,
+        ],
+        GetResetQuantity::class => [
+            ResetQuantity::class,
         ],
     ];
 
